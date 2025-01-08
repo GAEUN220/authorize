@@ -122,8 +122,6 @@ public class ApiV1PostController {
     ) {
     }
 
-
-
     @PostMapping
     public RsData<PostDto> writeItem(
             @RequestBody @Valid PostWriteReqBody reqBody,
