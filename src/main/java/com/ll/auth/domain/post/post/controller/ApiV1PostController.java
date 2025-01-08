@@ -23,8 +23,10 @@ import java.util.List;
 public class ApiV1PostController {
     private final PostService postService;
     private final MemberService memberService;
+    private final HttpServletRequest request;
 
-    private Member checkAuthentication(String credentials) {
+    private Member checkAuthentication() {
+        String credentials = request.getHeader("Authorization");
         credentials = credentials.substring("Bearer ".length());
         String[] credentialsBits = credentials.split("/", 2);
         long actorId = Long.parseLong(credentialsBits[0]);
@@ -60,12 +62,9 @@ public class ApiV1PostController {
 
     @DeleteMapping("/{id}")
     public RsData<Void> deleteItem(
-            @PathVariable long id,
-            HttpServletRequest req
+            @PathVariable long id
     ) {
-        String credentials = req.getHeader("Authorization");
-
-        Member actor = checkAuthentication(credentials);
+        Member actor = checkAuthentication();
 
         Post post = postService.findById(id).get();
 
@@ -95,10 +94,9 @@ public class ApiV1PostController {
     @Transactional
     public RsData<PostDto> modifyItem(
             @PathVariable long id,
-            @RequestBody @Valid PostModifyReqBody reqBody,
-            @RequestHeader("Authorization") String credentials
+            @RequestBody @Valid PostModifyReqBody reqBody
     ) {
-        Member actor = checkAuthentication(credentials);
+        Member actor = checkAuthentication();
 
         Post post = postService.findById(id).get();
 
@@ -127,10 +125,9 @@ public class ApiV1PostController {
 
     @PostMapping
     public RsData<PostDto> writeItem(
-            @RequestBody @Valid PostWriteReqBody reqBody,
-            @RequestHeader("Authorization") String credentials
+            @RequestBody @Valid PostWriteReqBody reqBody
     ) {
-        Member actor = checkAuthentication(credentials);
+        Member actor = checkAuthentication();
 
         Post post = postService.write(actor, reqBody.title, reqBody.content);
 
