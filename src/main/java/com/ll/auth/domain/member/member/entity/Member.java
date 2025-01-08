@@ -1,3 +1,4 @@
+
 package com.ll.auth.domain.member.member.entity;
 
 import com.ll.auth.global.jpa.entity.BaseTime;
@@ -22,10 +23,9 @@ public class Member extends BaseTime {
     private String nickname;
 
     @Column(unique = true, length = 50)
-    private String apikey;
+    private String apiKey;
 
     public String getName() {
         return this.nickname;
     }
 }
-

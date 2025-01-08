@@ -30,7 +30,7 @@ public class MemberService {
                 .username(username)
                 .password(password)
                 .nickname(nickname)
-                .apikey(UUID.randomUUID().toString())
+                .apiKey(UUID.randomUUID().toString())
                 .build();
 
         return memberRepository.save(member);
@@ -44,7 +44,7 @@ public class MemberService {
         return memberRepository.findById(authorId);
     }
 
-    public Optional<Member> findByApikey(String apikey) {
-        return memberRepository.findByApikey(apikey);
+    public Optional<Member> findByApiKey(String apiKey) {
+        return memberRepository.findByApiKey(apiKey);
     }
 }
