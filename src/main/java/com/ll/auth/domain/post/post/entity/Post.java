@@ -8,6 +8,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -36,5 +37,16 @@ public class Post extends BaseTime {
                 .content(content)
                 .build();
         comments.add(comment);
+    }
+
+    public List<PostComment> getCommemtsByOrderByIdDesc() {
+        return comments.reversed();
+    }
+
+    public Optional<PostComment> getCommentById(long commentId) {
+        return comments
+                .stream()
+                .filter(comment -> comment.getId() == commentId)
+                .findFirst();
     }
 }

@@ -26,8 +26,7 @@ public class ApiV1PostCommentController {
                 () -> new ServiceException("404-1", "%d번 글은 존재하지 않습니다.".formatted(postId))
         );
         return post
-                .getComments()
-                .reversed()
+                .getCommemtsByOrderByIdDesc()
                 .stream()
                 .map(PostCommentDto::new)
                 .toList();
@@ -42,12 +41,8 @@ public class ApiV1PostCommentController {
                 () -> new ServiceException("404-1", "%d번 글은 존재하지 않습니다.".formatted(postId))
         );
         return post
-                .getComments()
-                .reversed()
-                .stream()
-                .filter(postComment -> postComment.getId() == id)
+                .getCommentById(id)
                 .map(PostCommentDto::new)
-                .findFirst()
                 .orElseThrow(
                         () -> new ServiceException("404-2", "%d번 댓글은 존재하지 않습니다.".formatted(id))
                 );
